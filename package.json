@@ -1,0 +1,21 @@
+{
+  "name": "aaoiaf",
+  "version": "0.1.0",
+  "description": "Access a database of structured information about the Song of Ice and Fire book series",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cjduncana/An-API-of-Ice-and-Fire.git"
+  },
+  "keywords": [
+    "api",
+    "A Song of Ice and Fire",
+    "graph database"
+  ],
+  "author": "Christopher Duncan <cj.duncan.a@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cjduncana/An-API-of-Ice-and-Fire/issues"
+  },
+  "homepage": "https://github.com/cjduncana/An-API-of-Ice-and-Fire#readme"
+}
