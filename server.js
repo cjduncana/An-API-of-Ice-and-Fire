@@ -82,9 +82,11 @@ function extractMetadata(epub) {
     var epubMetadata = epub.metadata;
     // Create a new JSON object to store the book metadata
     var json = {};
-    // Add the title of the book to json
-    var title = epubMetadata.title;
-    json.title = cleanString(title, ':');
+    // Add the metadata extracted to the JSON object
+    json.title = cleanString(epubMetadata.title, ':');
+    json.isbn = epubMetadata.ISBN;
+    json.author = epubMetadata.creator;
+    json.publisher = epubMetadata.publisher;
     // Turn json into a string to be stored
     var result = JSON.stringify(json, null, 2);
     return result;
