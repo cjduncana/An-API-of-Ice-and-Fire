@@ -71,7 +71,7 @@ function createBookChapterFolder(book, epub) {
     epub.flow.forEach(function(chapter) {
         epub.getChapter(chapter.id, function(error, text) {
             var chapterfile = chapterdir;
-            chapterfile += stripFilename(chapter.href);
+            chapterfile += cleanString(chapter.href, '/', true);
             fs.writeFile(chapterfile, text, 'utf-8');
         });
     });
@@ -84,21 +84,37 @@ function extractMetadata(epub) {
     var json = {};
     // Add the title of the book to json
     var title = epubMetadata.title;
-    // TODO: Strip the extra content
-    json.title = title;
+    json.title = cleanString(title, ':');
     // Turn json into a string to be stored
     var result = JSON.stringify(json, null, 2);
     return result;
 }
 
-// TODO: Abstract this function
-function stripFilename(file) {
-    var newFilename = '';
-    var pos = file.lastIndexOf('/');
-    if (pos == -1) {
-        newFilename += file;
+/**
+ * Strips a string from content before or after a chosen substring.
+ * @arg {string} string - The original string to be stripped.
+ * @arg {string} substring - The string that will separate the part of the
+    original string that you want to keep from the rest of the original
+    string.
+ * @arg {boolean} fromTheEnd - Start the search for the substring at the end of
+    the original string. The default value is false.
+ * @return {string} A string without the content before or after a chosen
+    substring. If the original string did not contain said substring, a copy
+    of the original string is returned instead.
+ */
+function cleanString(string, substring, fromTheEnd) {
+    var newString = string;
+    var pos;
+    if (fromTheEnd) {
+        pos = string.lastIndexOf(substring);
+        if (pos != -1) {
+            newString = string.slice(pos);
+        }
     } else {
-        newFilename += file.slice(pos);
+        pos = string.indexOf(substring);
+        if (pos != -1) {
+            newString = string.slice(0, pos);
+        }
     }
-    return newFilename;
+    return newString;
 }
