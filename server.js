@@ -44,9 +44,9 @@ function epubFunc(book) {
     var epub = new EPub(book.epubfile, book.imagewebroot, book.chapterwebroot);
 
     epub.on('end', function() {
+        createBookMetadata(book, epub);
         var chapterdir = book.jsonfolder + 'chapters/';
         mkdirp.sync(__dirname + '/' + chapterdir);
-        fs.writeFile(book.jsonfolder + book.jsonfile, JSON.stringify(epub, null, 2), 'utf-8');
         epub.flow.forEach(function(chapter) {
             epub.getChapter(chapter.id, function(error, text) {
                 var chapterfile = chapterdir;
@@ -57,6 +57,23 @@ function epubFunc(book) {
         console.log(epub.metadata.title + ' Finished!');
     });
     epub.parse();
+}
+
+function createBookMetadata(book, epub) {
+    // Create book folder
+    mkdirp.sync(__dirname + '/' + book.jsonfolder);
+    // TODO: Turn the JSON coming from the epub into a finished product
+    // Create the metadata file
+    var epubMetadata = extractMetadata(epub);
+    var epubMetadataFileLocation = book.jsonfolder + 'metadata.json';
+    fs.writeFile(epubMetadataFileLocation, epubMetadata);
+    // TODO: Remove this second writeFile when we have a finished JSON
+    // metadata file
+    fs.writeFile(book.jsonfolder + book.jsonfile, JSON.stringify(epub, null, 2));
+}
+
+function extractMetadata(epub) {
+    return JSON.stringify(epub, null, 2);
 }
 
 function stripFilename(file) {
