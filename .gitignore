@@ -35,3 +35,6 @@ node_modules
 # Proprietary content
 books
 epub
+
+# TODO files
+TODO
