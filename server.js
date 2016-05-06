@@ -78,9 +78,20 @@ function createBookChapterFolder(book, epub) {
 }
 
 function extractMetadata(epub) {
-    return JSON.stringify(epub, null, 2);
+    // Extract the metadata from the epub file
+    var epubMetadata = epub.metadata;
+    // Create a new JSON object to store the book metadata
+    var json = {};
+    // Add the title of the book to json
+    var title = epubMetadata.title;
+    // TODO: Strip the extra content
+    json.title = title;
+    // Turn json into a string to be stored
+    var result = JSON.stringify(json, null, 2);
+    return result;
 }
 
+// TODO: Abstract this function
 function stripFilename(file) {
     var newFilename = '';
     var pos = file.lastIndexOf('/');
