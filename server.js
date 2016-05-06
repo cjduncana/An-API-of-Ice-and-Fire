@@ -37,6 +37,9 @@ var books = [
     }
 ];
 
+// Apply the function epubFunc to each book in the books array
+books.map(epubFunc);
+
 function epubFunc(book) {
     var epub = new EPub(book.epubfile, book.imagewebroot, book.chapterwebroot);
 
@@ -54,11 +57,6 @@ function epubFunc(book) {
         console.log(epub.metadata.title + ' Finished!');
     });
     epub.parse();
-}
-
-for (var i in books) {
-    var book = books[i];
-    epubFunc(book);
 }
 
 function stripFilename(file) {
