@@ -20,7 +20,7 @@ for the first version of this application program interface (API).
 | --------------- | ------------------ | ------------------------------------------------- |
 | url             | URL                | The hypermedia URL of this book                   |
 | slug            | Text               | A unique identifier following [these rules][slug] |
-| name            | Text               | The name of this book                             |
+| title           | Text               | The title of this book                            |
 | isbn            | Text               | The ISBN of the book                              |
 | author          | Person             | The author of the book                            |
 | numberOfPages   | Integer            | The number of pages in this book                  |
