@@ -17,5 +17,9 @@
   "bugs": {
     "url": "https://github.com/cjduncana/An-API-of-Ice-and-Fire/issues"
   },
-  "homepage": "https://github.com/cjduncana/An-API-of-Ice-and-Fire#readme"
+  "homepage": "https://github.com/cjduncana/An-API-of-Ice-and-Fire#readme",
+  "dependencies": {
+    "epub": "^0.1.6",
+    "mkdirp": "^0.5.1"
+  }
 }
