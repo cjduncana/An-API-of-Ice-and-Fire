@@ -45,15 +45,7 @@ function epubFunc(book) {
 
     epub.on('end', function() {
         createBookMetadata(book, epub);
-        var chapterdir = book.jsonfolder + 'chapters/';
-        mkdirp.sync(__dirname + '/' + chapterdir);
-        epub.flow.forEach(function(chapter) {
-            epub.getChapter(chapter.id, function(error, text) {
-                var chapterfile = chapterdir;
-                chapterfile += stripFilename(chapter.href);
-                fs.writeFile(chapterfile, text, 'utf-8');
-            });
-        });
+        createBookChapterFolder(book, epub);
         console.log(epub.metadata.title + ' Finished!');
     });
     epub.parse();
@@ -70,6 +62,18 @@ function createBookMetadata(book, epub) {
     // TODO: Remove this second writeFile when we have a finished JSON
     // metadata file
     fs.writeFile(book.jsonfolder + book.jsonfile, JSON.stringify(epub, null, 2));
+}
+
+function createBookChapterFolder(book, epub) {
+    var chapterdir = book.jsonfolder + 'chapters/';
+    mkdirp.sync(__dirname + '/' + chapterdir);
+    epub.flow.forEach(function(chapter) {
+        epub.getChapter(chapter.id, function(error, text) {
+            var chapterfile = chapterdir;
+            chapterfile += stripFilename(chapter.href);
+            fs.writeFile(chapterfile, text, 'utf-8');
+        });
+    });
 }
 
 function extractMetadata(epub) {
