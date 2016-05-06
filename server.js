@@ -53,15 +53,16 @@ function epubFunc(book) {
 
 function createBookMetadata(book, epub) {
     // Create book folder
-    mkdirp.sync(__dirname + '/' + book.jsonfolder);
+    var bookFolder = __dirname + '/' + book.jsonfolder;
+    mkdirp.sync(bookFolder);
     // TODO: Turn the JSON coming from the epub into a finished product
     // Create the metadata file
     var epubMetadata = extractMetadata(epub);
-    var epubMetadataFileLocation = book.jsonfolder + 'metadata.json';
+    var epubMetadataFileLocation = bookFolder + 'metadata.json';
     fs.writeFile(epubMetadataFileLocation, epubMetadata);
     // TODO: Remove this second writeFile when we have a finished JSON
     // metadata file
-    fs.writeFile(book.jsonfolder + book.jsonfile, JSON.stringify(epub, null, 2));
+    fs.writeFile(bookFolder + book.jsonfile, JSON.stringify(epub, null, 2));
 }
 
 function createBookChapterFolder(book, epub) {
