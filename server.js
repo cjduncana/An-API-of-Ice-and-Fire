@@ -46,7 +46,9 @@ function epubFunc(book) {
         fs.writeFile(book.jsonfolder + book.jsonfile, JSON.stringify(epub, null, 2), 'utf-8');
         epub.flow.forEach(function(chapter) {
             epub.getChapter(chapter.id, function(error, text) {
-                fs.writeFile(chapterdir + chapter.id + '.html', text, 'utf-8');
+                var chapterfile = chapterdir;
+                chapterfile += stripFilename(chapter.href);
+                fs.writeFile(chapterfile, text, 'utf-8');
             });
         });
         console.log(epub.metadata.title + ' Finished!');
@@ -57,4 +59,15 @@ function epubFunc(book) {
 for (var i in books) {
     var book = books[i];
     epubFunc(book);
+}
+
+function stripFilename(file) {
+    var newFilename = '';
+    var pos = file.lastIndexOf('/');
+    if (pos == -1) {
+        newFilename += file;
+    } else {
+        newFilename += file.slice(pos);
+    }
+    return newFilename;
 }
